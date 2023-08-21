@@ -1,0 +1,51 @@
+1. You need to create VPC with one private subnet and one public subnet. No need to create NAT gateway.
+
+    provider "aws" {
+        region="ap-south-mumbai1"
+    }
+
+resource "aws_vpc" {
+  cidr_block="10.0"
+}
+
+
+resource  "public subnet"{
+         vpc_id=aws_id
+         cidr_block="10.0.1.0"
+       map_public_ip_on_launch=true
+          avaialbility_zone="ap-south-mumbai2b"
+}
+
+resource  "private_subnet" {
+vpc_id =aws_vpc
+ cidr_block="10.0.2.0"
+availability_zone="ap-south-mumbai1a"
+
+
+
+2. You need to create an EC2 instance in the above created VPC in public subnet, instance type should be t2.micro, volume size should be 5gb and volume type should be gp2, should not be encrypted. You need to Add tag as key should be "purpose" and value should be "Assignment".
+      steps to these following steps :
+     1)sign into the aws console:sign with the username and password 
+     2)search for EC2 in searchbar dashboard:type "EC2" in searchbar and clickit .
+     3)launch instance:to start creating ec2 instance
+      4)choose amazon machine image(AMI):select t2.micro
+      5)select instance type:click to the next configure instance details
+  6)add storage:
+            size,volume ,delete on termination and click next button
+7)add tags: tags= {
+     Name ="EC2-Instance"
+   purpose+ "Assignment"
+}
+8)configure security group :review and next button click
+9)create a new key piar or select existing key pair
+10)launch :finally :launch status
+
+
+
+
+
+3.3. You need to create security group and attach it to above Ec2 instance. Security group should have inbound rules for ssh port and should have outbound rules of all traffic.
+
+  1)create a security group 
+     security_groups =[aws_security_group.instance_sg.name]
+2)attach to security group to an instance 
